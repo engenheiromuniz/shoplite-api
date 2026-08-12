@@ -15,7 +15,20 @@ public class PedidoService {
 	}
 	
 	public void adicionarItem(Pedido pedido, Long produtoId, Integer quantidade) {
-////
+	    Produto produto = produtoRepository.findById(produtoId)
+	        .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+	    if (quantidade > produto.getEstoque()) {
+	        throw new EstoqueInsuficienteException(
+	            "Estoque insuficiente para o produto: " + produto.getNome());
+	    }
+
+	    ItemPedido item = new ItemPedido();
+	    item.setPedido(pedido);
+	    item.setProduto(produto);
+	    item.setQuantidade(quantidade);
+	    item.setPrecoUnitario(produto.getPreco());
+	    pedido.getItens().add(item);
 	}
 
 }
