@@ -1,0 +1,13 @@
+package com.shoplite.shoplite_api;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ShopliteApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ShopliteApiApplication.class, args);
+	}
+
+}
