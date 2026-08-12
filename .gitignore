@@ -23,3 +23,6 @@
 hs_err_pid*
 replay_pid*
 /.metadata/
+
+# Ignorar a pasta de cadernos locais
+cadernos/
