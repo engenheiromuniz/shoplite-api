@@ -1,14 +1,16 @@
 package com.shoplite.shoplite_api.controller;
 
-// Seus pacotes internos (DTOs, Services, Repositories, Entities)
+
 import com.shoplite.shoplite_api.dto.AuthResponse;
 import com.shoplite.shoplite_api.dto.LoginRequest;
 import com.shoplite.shoplite_api.dto.RegisterRequest;
 import com.shoplite.shoplite_api.service.AutenticacaoService;
 import com.shoplite.shoplite_api.service.JwtService;
 import com.shoplite.shoplite_api.repository.UsuarioRepository;
-import com.shoplite.shoplite_api.model.Usuario; // Ou o pacote onde sua entidade Usuario está
-import com.shoplite.shoplite_api.model.Papel;   // Ou o pacote onde seu enum/classe Papel está
+import com.shoplite.shoplite_api.repository.ClienteRepository; 
+import com.shoplite.shoplite_api.model.Usuario; 
+import com.shoplite.shoplite_api.model.Papel;   
+import com.shoplite.shoplite_api.model.Cliente;   
 
 // Spring HTTP e Web Rest
 import org.springframework.http.HttpStatus;
@@ -24,7 +26,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -34,24 +35,34 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final AutenticacaoService autenticacaoService;
+    private final ClienteRepository clienteRepository; 
+
 
     public AuthController(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
                            AuthenticationManager authenticationManager, JwtService jwtService,
-                           AutenticacaoService autenticacaoService) {
+                           AutenticacaoService autenticacaoService, ClienteRepository clienteRepository) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.autenticacaoService = autenticacaoService;
+        this.clienteRepository = clienteRepository;
     }
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody RegisterRequest request) {
         Usuario usuario = new Usuario();
         usuario.setEmail(request.email());
-        usuario.setSenha(passwordEncoder.encode(request.senha())); // nunca salvar senha em texto puro
+        usuario.setSenha(passwordEncoder.encode(request.senha())); 
         usuario.setPapel(Papel.CLIENTE);
         usuarioRepository.save(usuario);
+
+
+        Cliente cliente = new Cliente();
+        cliente.setEmail(request.email());
+        cliente.setNome(request.email()); 
+        clienteRepository.save(cliente);
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
