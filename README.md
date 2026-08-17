@@ -1,6 +1,6 @@
 # ShopLite API
 
-![CI](https://github.com/SEU-USUARIO/shoplite-api/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/engenheiromuniz/shoplite-api/actions/workflows/ci.yml/badge.svg)
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
